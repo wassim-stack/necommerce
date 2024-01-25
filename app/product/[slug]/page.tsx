@@ -1,10 +1,11 @@
 import AddToBag from "@/app/components/AddToBag";
+import CheckoutNow from "@/app/components/CheckoutNow";
 import ImageGallery from "@/app/components/ImageGallery";
 import { fullProduct } from "@/app/interface";
 import { client } from "@/app/lib/sanity";
 import { Button } from "@/components/ui/button";
 import { Star, Truck } from "lucide-react";
-
+export const dynamic = "force-dynamic";
 async function getData(slug: string) {
   const query = `*[_type=='product' && slug.current =="${slug}"][0]{
         _id, 
@@ -63,6 +64,15 @@ const page = async ({ params }: { params: { slug: string } }) => {
               </div>
               <div className="flex gap-2.5">
                 <AddToBag
+                  key={data._id}
+                  name={data.name}
+                  image={data.iamges[0]}
+                  description={data.description}
+                  price={data.price}
+                  currency="USD"
+                  price_id={data.price_id}
+                />
+                <CheckoutNow
                   key={data._id}
                   name={data.name}
                   image={data.iamges[0]}
